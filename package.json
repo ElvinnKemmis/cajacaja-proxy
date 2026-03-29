@@ -1,4 +1,6 @@
 {
-  "name": "proxy",
-  "version": "1.0.0"
+  "object": "error",
+  "status": 401,
+  "code": "unauthorized",
+  "message": "API token is missing or invalid."
 }

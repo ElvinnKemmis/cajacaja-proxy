@@ -1,13 +1,13 @@
 export default async function handler(req, res) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PATCH,DELETE,OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Authorization,Content-Type,Notion-Version');
+
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+
   try {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PATCH,DELETE,OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Authorization,Content-Type,Notion-Version');
-
-    if (req.method === 'OPTIONS') {
-      return res.status(200).end();
-    }
-
     const path = req.url.replace('/api/notion', '');
 
     const notionRes = await fetch('https://api.notion.com/v1' + path, {
@@ -22,9 +22,8 @@ export default async function handler(req, res) {
         : undefined
     });
 
-    const text = await notionRes.text();
-    
-    res.status(notionRes.status).send(text);
+    const data = await notionRes.json();
+    res.status(notionRes.status).json(data);
 
   } catch (error) {
     res.status(500).json({
