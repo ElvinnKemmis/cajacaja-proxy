@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "functions": {
+    "api/notion.js": {
+      "memory": 128,
+      "maxDuration": 10
+    }
+  },
+  "routes": [
+    {
+      "src": "/api/notion(.*)",
+      "dest": "/api/notion.js"
+    }
+  ]
+}
